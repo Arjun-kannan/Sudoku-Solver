@@ -51,10 +51,10 @@ To enable OCR input:
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/SudokuSolver.git
+   git clone https://github.com/yourusername/java.SudokuSolver.git
 
 2. Compile and Run
     ```bash
    javac src/*.java
-   java src.SudokuSolverGUI
+   java src.java.SudokuSolverGUI
 

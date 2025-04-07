@@ -12,7 +12,7 @@ public class SudokuSolver {
                         if(isValid(board, row, col, i)){
                             board[row][col] = i;
                             callback.onUpdate(copyBoard(board)); // Send current state
-                            try { Thread.sleep(3); } catch (InterruptedException ignored) {}
+                            try { Thread.sleep(1); } catch (InterruptedException ignored) {}
 
                             if(solveBoard(board, callback)){
                                 return true;

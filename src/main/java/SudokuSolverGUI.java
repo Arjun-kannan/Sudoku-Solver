@@ -1,8 +1,11 @@
+import org.opencv.core.Core;
+
 import javax.swing.*;  // For Swing components
 import java.awt.*;     // For Layouts, Colors, Fonts
 import javax.swing.SwingWorker;
 import javax.swing.JOptionPane;
 import java.util.List;
+import java.io.File;
 
 public class SudokuSolverGUI {
     private static final int SIZE = 9;
@@ -31,6 +34,18 @@ public class SudokuSolverGUI {
                 gridPanel.add(cells[row][col]);
             }
         }
+
+        JButton loadImageButton = new JButton("Load from image");
+        loadImageButton.setFont(new Font("Arial", Font.BOLD, 20));
+        loadImageButton.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File selectedFile = chooser.getSelectedFile();
+                int[][] board = SudokuImageReader.extractSudokuBoard(selectedFile);
+                updateBoard(board);
+            }
+        });
+
         JButton solveButton = new JButton("Solve");
         solveButton.setFont(new Font("Arial", Font.BOLD, 20));
         solveButton.addActionListener(e -> {
@@ -57,18 +72,6 @@ public class SudokuSolverGUI {
                     updateBoard(latest);  // Custom method to update GUI
                 }
 
-                private void updateBoard(int[][] board) {
-                    for (int row = 0; row < SIZE; row++) {
-                        for (int col = 0; col < SIZE; col++) {
-                            if (board[row][col] != 0) {
-                                cells[row][col].setText(String.valueOf(board[row][col]));
-                            } else {
-                                cells[row][col].setText("");
-                            }
-                        }
-                    }
-                }
-
                 @Override
                 protected void done() {
                     try {
@@ -85,14 +88,27 @@ public class SudokuSolverGUI {
         });
 
         frame.add(gridPanel, BorderLayout.CENTER);
+        frame.add(loadImageButton, BorderLayout.NORTH);
         frame.add(solveButton, BorderLayout.SOUTH);
 
         frame.setSize(500, 550);
         frame.setVisible(true);
 
     }
+    private void updateBoard(int[][] board) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (board[row][col] != 0) {
+                    cells[row][col].setText(String.valueOf(board[row][col]));
+                } else {
+                    cells[row][col].setText("");
+                }
+            }
+        }
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SudokuSolverGUI::new);
+        System.load("D:\\0_Programming\\opencv\\build\\java\\x64\\opencv_java451.dll");
     }
 }
 
